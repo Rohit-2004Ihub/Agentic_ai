@@ -1,0 +1,26 @@
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+input[type="file"] {
+  margin: 10px 0;
+}
+
+button {
+  padding: 8px 16px;
+  margin-bottom: 20px;
+}
+
+.error {
+  color: red;
+}
+
+.result pre {
+  background: #f6f8fa;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
