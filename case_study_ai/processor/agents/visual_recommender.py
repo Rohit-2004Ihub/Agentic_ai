@@ -3,7 +3,13 @@ from langchain_core.runnables import Runnable
 from .utils import get_llm
 
 template = """
-Based on the following case study, suggest appropriate visuals (like architecture diagram, user flow, charts) and where to place them.
+Based on the following case study, suggest appropriate visuals (like architecture diagrams, user flows, or charts).
+
+Also, generate a flowchart in Mermaid.js syntax (flowchart TD) representing the end-to-end pipeline described in the case study.
+
+Format:
+- 📍 Visual Suggestions
+- 🛠️ Mermaid Flowchart (in ```mermaid ... ``` block)
 
 Case Study:
 {case_study}
