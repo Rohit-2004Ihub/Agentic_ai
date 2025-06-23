@@ -16,15 +16,14 @@ function App() {
 
     setLoading(true);
     setError("");
-    setResult(null);
 
     const formData = new FormData();
     formData.append("file", file);
 
     try {
       const res = await axios.post("http://localhost:8000/process-docx/", formData);
-      console.log("📥 Backend response:", res.data);
-      setResult(res.data);
+      console.log("📥 Agent Output:", res.data.result);
+      setResult(res.data.result);
     } catch (err) {
       console.error("❌ Upload error:", err);
       setError("Error uploading or processing the file.");
@@ -33,68 +32,59 @@ function App() {
     }
   };
 
+  const renderOutput = (label, content) => {
+    if (!content) return null;
+
+    return (
+      <div className="section">
+        <h3>{label}</h3>
+        <pre>{typeof content === "string" ? content : JSON.stringify(content, null, 2)}</pre>
+      </div>
+    );
+  };
+
   return (
-    <div className="container">
-      <h2>📄 AI-Powered Case Study Generator</h2>
+    <>
+      {/* Floating background blobs */}
+      <div className="blob blob1"></div>
+      <div className="blob blob2"></div>
 
-      <input
-        type="file"
-        accept=".docx"
-        onChange={(e) => setFile(e.target.files[0])}
-      />
-      <button onClick={handleUpload} disabled={loading}>
-        {loading ? "Processing..." : "Upload and Generate"}
-      </button>
+      <div className="container">
+        <h2>📄 AI-Powered Case Study Generator</h2>
 
-      {error && <p className="error">{error}</p>}
+        <input
+          type="file"
+          accept=".docx"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+        <button onClick={handleUpload} disabled={loading}>
+          {loading ? "Processing..." : "Upload and Generate"}
+        </button>
 
-      {result && (
-        <div className="result">
-          {result.case_study && (
-            <>
-              <h3>📘 Case Study</h3>
-              <pre>{result.case_study}</pre>
-            </>
-          )}
+        {error && <p className="error">{error}</p>}
 
-          {result.refined_case_study && (
-            <>
-              <h3>🧠 Refined Case Study (RAG)</h3>
-              <pre>{result.refined_case_study}</pre>
-            </>
-          )}
+        {result && (
+          <div className="result">
+            {renderOutput("📊 Structured Summary", result.structured_summary)}
+            {renderOutput("📘 Case Study", result.case_study)}
+            {renderOutput("🧠 Refined Case Study (RAG)", result.refined_case_study)}
+            {renderOutput("🎯 Visual Aids", result.visuals)}
+            {renderOutput("🎤 Pitch Feedback", result.pitch_feedback)}
 
-          {result.visuals && (
-            <>
-              <h3>🎯 Visual Aids</h3>
-              <pre>{result.visuals}</pre>
-            </>
-          )}
-
-          {result.pitch_feedback && (
-            <>
-              <h3>🎤 Pitch Feedback</h3>
-              <pre>
-                {typeof result.pitch_feedback === "string"
-                  ? result.pitch_feedback
-                  : JSON.stringify(result.pitch_feedback, null, 2)}
-              </pre>
-            </>
-          )}
-
-          {/* Fallback: if none of the structured fields exist */}
-          {!result.case_study &&
-            !result.refined_case_study &&
-            !result.visuals &&
-            !result.pitch_feedback && (
-              <>
-                <h3>📄 Output</h3>
-                <pre>{JSON.stringify(result, null, 2)}</pre>
-              </>
-            )}
-        </div>
-      )}
-    </div>
+            {!result.structured_summary &&
+              !result.case_study &&
+              !result.refined_case_study &&
+              !result.visuals &&
+              !result.pitch_feedback && (
+                <>
+                  <h3>📋 Full Raw Output</h3>
+                  <pre>{JSON.stringify(result, null, 2)}</pre>
+                </>
+              )}
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
