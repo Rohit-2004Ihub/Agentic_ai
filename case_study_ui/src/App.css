@@ -8,12 +8,17 @@ body {
   animation: gradient 20s ease infinite;
   min-height: 100vh;
   overflow-x: hidden;
+
+  /* Flexbox for centering */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 
 /* Main container */
 .container {
   max-width: 900px;
-  margin: 80px auto;
   padding: 40px;
   background-color: #ffffffee;
   border-radius: 16px;
@@ -21,6 +26,7 @@ body {
   z-index: 2;
   position: relative;
 }
+
 
 /* File input */
 input[type="file"] {
