@@ -18,7 +18,7 @@ The system uses **LangChain**, **Gemini 1.5 Flash**, and a **multi-agent archite
 
 ##  Architecture
 
-https://drive.google.com/file/d/1ZZ7ULLUjQ1Wp76UKa30Fj8hczriKot6v/view?usp=sharing
+https://drive.google.com/file/d/1t0B9ChJ4f52IbXP8C1rgbOiy7PH46qQz/view?usp=drive_link
 
 ##  Project Structure
 
