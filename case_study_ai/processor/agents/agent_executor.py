@@ -14,5 +14,5 @@ agent_executor = initialize_agent(
     llm=llm,
     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
     verbose=True,
-    return_intermediate_steps=True  # ✅ IMPORTANT
+    return_intermediate_steps=True  
 )
