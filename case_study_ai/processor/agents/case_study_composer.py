@@ -5,9 +5,9 @@ from langchain_core.runnables import Runnable
 template = """
 Generate a professional case study in the format:
 
-**Problem:**  
-**Solution:**  
-**Result:**  
+Problem: 
+Solution: 
+Result:  
 
 Based on this project summary:
 {summary}

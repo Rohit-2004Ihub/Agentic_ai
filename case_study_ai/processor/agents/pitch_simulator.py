@@ -4,15 +4,16 @@ from .utils import get_llm
 
 template = """
 Simulate pitch feedback. Analyze clarity, impact, innovation, and persuasion.
-Give a pitch score (out of 10) and improvement suggestions.
+Give a pitch score (out of 10) and suggestions for improvement.
 
 Input:
 {case_study}
 
-Return format:
-- Score:
-- Strengths:
-- Improvement Suggestions:
+Return in plain text with no special characters or markdown formatting.
+Format:
+Score out of 10
+Strengths
+Suggestions for Improvement
 """
 
 prompt = PromptTemplate.from_template(template)
