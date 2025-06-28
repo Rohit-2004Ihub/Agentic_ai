@@ -18,7 +18,7 @@ tools = [
     ),
     Tool(
         name="RAGRefiner",
-        func=lambda input: rag_benchmark_agent.invoke({"query": input}),
+        func=lambda input: rag_benchmark_agent.invoke({"query": input})["result"],
         description="Refine and benchmark the case study with external knowledge."
     ),
     Tool(
