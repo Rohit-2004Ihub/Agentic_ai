@@ -1,20 +1,46 @@
 from pymongo import MongoClient
-import os
 from datetime import datetime
+import pytz
+import hashlib
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
-DB_NAME = "case_study_ai"
-COLLECTION_NAME = "refined_results"
+# MongoDB setup
+client = MongoClient("mongodb://localhost:27017/")
+db = client["case_study_ai"]
+collection = db["refined_result"] 
 
-client = MongoClient(MONGO_URI)
-db = client[DB_NAME]
-collection = db[COLLECTION_NAME]
+def generate_text_hash(text: str) -> str:
+    """
+    Generate a unique SHA256 hash for the given text.
+    """
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
-def save_rag_result(document_name: str, refined_text: str, metadata: dict = {}):
+def save_rag_result(user_id, document_name, refined_text, metadata=None):
+    """
+    Save the RAG result to MongoDB if it's not a duplicate (based on text hash).
+    Timestamp is saved in IST.
+    """
+    ist_now = datetime.now(pytz.timezone("Asia/Kolkata"))
+    text_hash = generate_text_hash(refined_text)
+
+    # Prevent duplicate based on hash
+    existing = collection.find_one({
+        "user_id": user_id,
+        "document_name": document_name,
+        "hash": text_hash
+    })
+
+    if existing:
+        print("⚠️ Duplicate detected: Same user, document, and text already saved.")
+        return
+
     data = {
+        "user_id": user_id,
         "document_name": document_name,
         "refined_text": refined_text,
-        "metadata": metadata,
-        "timestamp": datetime.utcnow()
+        "hash": text_hash,
+        "metadata": metadata or {},
+        "timestamp": ist_now
     }
-    return collection.insert_one(data)
+
+    collection.insert_one(data)
+    print("✅ RAG result saved successfully.")
