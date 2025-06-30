@@ -2,6 +2,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
 from .utils.docx_reader import extract_text_from_docx
 from .agents.agent_executor import agent_executor
+from .utils.mongo_client import save_rag_result
+
 import traceback
 import re
 
@@ -67,6 +69,13 @@ def process_project_docx(request):
                 case_study = format_paragraphs(obs_text)
             elif tool_name == "RAGRefiner":
                 refined = format_paragraphs(obs_text, space_between=True)
+
+                # ✅ Save RAG output to MongoDB
+                save_rag_result(
+                    document_name=uploaded_file.name,
+                    refined_text=refined,
+                    metadata={"source": "RAGRefiner", "filename": uploaded_file.name}
+                )
             elif tool_name == "VisualAidRecommender":
                 visuals = format_paragraphs(obs_text)
             elif tool_name == "PitchSimulator":
@@ -90,7 +99,7 @@ def process_project_docx(request):
         if request.GET.get("plain") == "1":
             return HttpResponse(final_summary_clean, content_type="text/plain")
 
-        # Otherwise return structured JSON
+        # Step 7: Return structured JSON
         return JsonResponse({
             "result": {
                 "structured_summary": structured,
