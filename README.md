@@ -1,158 +1,67 @@
-# Agentic_ai### 📘 README - Agentic AI-Powered Case Study Generator
+Agentic AI-Powered Case Study Generator
+Turn your academic project documents into professional case studies using a multi-agent AI system powered by LangChain and Gemini API.
 
----
-
-##  Overview
-
-**Agentic AI-Powered Case Study Generator** is a full-stack application that allows users to upload `.docx` project documents and automatically generates:
-
-* A structured project summary
-* A detailed case study
-* A refined version using RAG (Retrieval Augmented Generation)
-* Visual aid recommendations (like flowcharts and diagrams)
-* Pitch feedback for presenting to investors or evaluators
-
-The system uses **LangChain**, **Gemini 1.5 Flash**, and a **multi-agent architecture** powered by **LangGraph**. It is built with a **Django backend** and a **React frontend**, and designed for students, researchers, and startups preparing professional case documentation and presentations.
-
----
-
-##  Architecture
-
-https://drive.google.com/file/d/1t0B9ChJ4f52IbXP8C1rgbOiy7PH46qQz/view?usp=drive_link
-
-##  Project Structure
-
-```
-case_study_ai/
-├── backend/
-│   ├── views.py
-│   ├── urls.py
-│   ├── agents/
-│   │   ├── project_extractor.py
-│   │   ├── case_study_composer.py
-│   │   ├── rag_refiner.py
-│   │   ├── visual_recommender.py
-│   │   ├── pitch_simulator.py
-│   │   └── agent_executor.py
-│   ├── utils/
-│   │   └── docx_reader.py
-│   └── settings.py
-├── frontend/
-│   └── App.jsx
-├── requirements.txt
-└── README.md
-```
-
----
-
-##  How It Works
-
-1. **Upload Document**: User uploads a `.docx` file via the frontend.
-2. **Django API**: Receives file → extracts text → triggers LangGraph agent flow.
-3. **LangGraph Execution**:
-
-   * `ProjectExtractor` identifies key summary points.
-   * `CaseStudyComposer` writes a coherent narrative.
-   * `RAGRefiner` enhances the story using embedded context and FAISS vector search.
-   * `VisualAidRecommender` suggests diagrams and optionally Mermaid.js flowcharts.
-   * `PitchSimulator` critiques the pitch and gives improvement tips.
-4. **Frontend Display**: React app shows each agent’s output with animations and formatting.
-
----
-
-##  Key Technologies
-
-* **Django** — RESTful backend for file handling and agent execution
-* **React.js** — Dynamic frontend UI
-* **LangChain + LangGraph** — Multi-agent orchestration
-* **Gemini 1.5 Flash** — LLM for reasoning, writing, and simulation
-* **FAISS + RAG** — For document-aware contextual refinement
-* **Mermaid.js** — Visual diagram output
-
----
-
-##  Setup Instructions
-
-### Backend (Django)
+Problem Statement
+Students often create great academic projects but face these challenges:
+Struggle to summarize projects effectively for evaluations or placements.
+Lack real-world benchmarking and structure in their documentation.
+Miss out on compelling visuals and pitch feedback to improve presentation.
 
 
-cd case_study_ai/backend
+
+Solution Overview
+This system intelligently transforms .docx project documents into structured case studies using an Agentic AI pipeline:
+Project Extractor Agent → Extracts structured summary from the document.
+
+
+Case Study Composer → Generates a complete case study draft.
+RAG Refiner → Improves quality using Retrieval-Augmented Generation.
+Visual Aid Recommender → Suggests charts/diagrams for visual impact.
+Pitch Simulator → Simulates stakeholder pitch and provides feedback.
+All results are saved with history tracking for user access.
+
+
+ Tech Stack
+Frontend: React + Tailwind CSS + Lucide Icons
+Backend: Django (REST API)
+AI Engine: LangChain Agents + Gemini 1.5 API
+Database: MongoDB (for storing history and RAG results)
+Storage: Local upload of .docx files (can be extended to cloud)
+
+
+
+ Features
+ Upload .docx project file
+ Multi-agent AI pipeline to generate outputs
+ Suggests visuals and simulates pitches
+ Saves versioned history of results
+ User signup & login functionality
+
+Setup Instructions
+1. Clone the Repository
+git clone https://github.com/your-username/case-study-generator.git
+cd case-study-generator
+
+
+2. Backend Setup (Django)
+cd backend
 pip install -r requirements.txt
+python manage.py migrate
 python manage.py runserver
-```
 
-### Frontend (React)
-
-
-cd case_study_ai/frontend
-npm install
-npm start
-```
-
-### .env
-
-Store your Google Gemini API key in a `.env` file:
-
-```env
+Update your .env file with:
 GEMINI_API_KEY=your_key_here
-```
+MONGO_URL=mongodb://localhost:27017/
 
----
+3. Frontend Setup (React)
+cd frontend
+npm install
+npm run dev
 
-##  Example Output
+Future Scope
+Export final case study as downloadable PDF
+Cloud file storage and access
+AI-powered improvement suggestions based on domain
 
-```
-Structured Summary:
-"This project developed a smart waste management solution using IoT and AI..."
-
-Case Study:
-"During a pilot run across 3 cities, bin overflow dropped by 90%..."
-
-RAG-Enhanced Case Study:
-"Compared to similar IoT systems from 2023, our design showed..."
-
-Visual Aid Suggestions:
-- Architecture Diagram
-- Flowchart (Mermaid)
-- Comparative Analytics Chart
-
-Pitch Feedback:
-"Highlight ROI and unique selling point better. Include estimated market reach."
-```
-
----
-
-##  RAG Implementation
-
-* All case study content is embedded using `GoogleGenerativeAIEmbeddings`.
-* FAISS is used for fast nearest neighbor search.
-* The `RAGRefiner` agent retrieves chunks relevant to the case study and enhances clarity, accuracy, and benchmarking with external knowledge.
-
----
-
-## 🌐 Live Demo (Optional)
-
-Paste Mermaid flowcharts generated by the agent into:
-**[https://mermaid.live/edit](https://mermaid.live/edit)**
-
----
-
-## 👨 Contributing
-
-To contribute:
-
-1. Fork the repo
-2. Create a feature branch
-3. Submit a pull request with clear description
-
----
-
-##  Future Improvements
-
-* Add support for `.pdf` and `.txt` uploads
-* Enable image rendering for visual diagrams
-* Store case studies in a MongoDB collection for history and scoring
-
----
-
-
+Architecture
+https://drive.google.com/file/d/1yafs35wzqpwDv3O6R7MgYgt5FEWX0xen/view?usp=drive_link
