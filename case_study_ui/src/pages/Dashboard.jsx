@@ -78,7 +78,7 @@ function Dashboard() {
           <h3 className="text-lg font-semibold text-gray-800">{label}</h3>
         </div>
         <div className="bg-red-50 rounded-lg p-4 border border-red-100">
-          <pre className="whitespace-pre-wrap text-sm text-gray-700 font-mono leading-relaxed">
+          <pre className="whitespace-pre-wrap text-sm text-gray-700 leading-relaxed font-[Times_New_Roman]">
             {typeof content === "string" ? content : JSON.stringify(content, null, 2)}
           </pre>
         </div>
