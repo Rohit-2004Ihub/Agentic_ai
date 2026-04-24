@@ -1,5 +1,6 @@
 Agentic AI-Powered Case Study Generator
-Turn your academic project documents into professional case studies using a multi-agent AI system powered by LangChain and Gemini API.
+## Introduction
+This project is a full-stack application that allows users to upload .docx project documents and automatically generates a structured project summary, a detailed case study, and a refined version using RAG (Retrieval Augmented Generation).
 
 Problem Statement
 Students often create great academic projects but face these challenges:
